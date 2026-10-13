@@ -129,15 +129,7 @@ class SwiftQuizApp {
   // --- Real-Time Leaderboard System (No Guinea Pig Users) ---
   initLeaderboard() {
     // Official competing developers
-    this.competitors = [
-      { id: 'c1', name: 'Sophia Vance', handle: 'sophia_v', avatar: '🧙‍♀️', points: 2850, accuracy: 98, completed: 19 },
-      { id: 'c2', name: 'Marcus Thorne', handle: 'm_thorne', avatar: '⚡', points: 2680, accuracy: 94, completed: 18 },
-      { id: 'c3', name: 'Liam O\'Connor', handle: 'liam_dev', avatar: '👨‍🚀', points: 2420, accuracy: 90, completed: 17 },
-      { id: 'c4', name: 'Priya Sharma', handle: 'priya_codes', avatar: '🐯', points: 2290, accuracy: 89, completed: 16 },
-      { id: 'c5', name: 'Kenji Sato', handle: 'kenji_s', avatar: '🥷', points: 1940, accuracy: 85, completed: 15 },
-      { id: 'c6', name: 'Elena Rostova', handle: 'elena_ios', avatar: '📱', points: 1710, accuracy: 82, completed: 14 },
-      { id: 'c7', name: 'David Kim', handle: 'david_k', avatar: '💻', points: 1450, accuracy: 78, completed: 12 }
-    ];
+    this.competitors = [];
 
     this.recalculateRankings();
   }
