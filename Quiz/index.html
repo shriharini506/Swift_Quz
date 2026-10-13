@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swift Programming Tournament • Round 2</title>
+  <meta name="description" content="Official Swift Programming Quiz Arena. Test your knowledge on Day 2: Logic, Functions & Algorithms with real-time scoring and live leaderboard.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            swift: {
+              DEFAULT: '#FF5436',
+              orange: '#FF5436',
+              coral: '#FF6B4A',
+              sunset: '#FF334B',
+              amber: '#FF8A00',
+              dark: '#080C16',
+              surface: '#0F172A',
+              border: 'rgba(255, 255, 255, 0.08)'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 bg-mesh selection:bg-orange-500/30 selection:text-orange-200">
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Floating Real-Time Points Burst Anchor -->
+  <div id="floating-points-container" class="fixed top-20 right-8 z-50 pointer-events-none flex flex-col items-end gap-2"></div>
+
+  <!-- ========================================================================= -->
+  <!-- SCREEN 1: LOGIN PORTAL GATEWAY (Shown first when user visits) -->
+  <!-- ========================================================================= -->
+  <section id="login-screen" class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative z-30">
+    <div class="max-w-md w-full glass-panel-elevated rounded-3xl p-6 sm:p-8 relative border border-slate-700/80 shadow-2xl animate-pop-in">
+      
+      <!-- Brand Header -->
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 p-0.5 shadow-2xl shadow-orange-500/30 flex items-center justify-center glow-orange">
+          <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+            <svg class="w-9 h-9 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.43 2.06c.86 1.8 1.15 3.32.93 4.67-.18 1.12-.76 2.07-1.61 2.89 2.5-.94 4.88-2.67 6.46-4.99 1.48 2.22 1.76 4.79.83 7.23-.74 1.94-2.2 3.61-4.06 4.86 3.65-1.57 6.45-4.42 7.76-8.08.35 1.75.05 3.55-.88 5.16-1.5 2.6-4.14 4.68-7.39 5.86 3.01-.5 5.58-2.02 7.26-4.27-.47 3.51-2.9 6.25-6.23 7.42-3.14 1.1-6.72.63-9.59-1.28 2.85.5 5.76-.17 8.08-1.92-2.31-.05-4.47-.94-6.17-2.52 1.93.18 3.86-.33 5.4-1.46-2.52-.75-4.43-2.61-5.26-5.12 1.28.37 2.62.33 3.87-.13C8.42 9.53 6.06 6.54 6.74 3c.09-.5.23-.97.42-1.42.94 1.84 2.2 3.37 3.73 4.54-.74-1.47-1.03-2.99-.87-4.38.16-1.39.81-2.6 1.84-3.6.09 1.34.28 2.67.57 3.92z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-2">
+          <span>🏆 Swift Championship 2026</span>
+        </div>
+
+        <h1 class="font-heading font-black text-2xl sm:text-3xl text-slate-100 tracking-tight">
+          Participant Portal
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">
+          Enter your developer identity to join the tournament arena & track live leaderboard rankings.
+        </p>
+      </div>
+
+      <!-- Avatar Selection -->
+      <div class="mb-5">
+        <label class="block text-xs font-semibold text-slate-300 mb-2">
+          Choose Your Avatar:
+        </label>
+        <div id="login-avatar-grid" class="grid grid-cols-6 gap-2">
+          <button type="button" data-avatar="🦅" class="avatar-choice selected p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xl flex items-center justify-center cursor-pointer">🦅</button>
+          <button type="button" data-avatar="🥷" class="avatar-choice p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xl flex items-center justify-center cursor-pointer">🥷</button>
+          <button type="button" data-avatar="🧙‍♂️" class="avatar-choice p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xl flex items-center justify-center cursor-pointer">🧙‍♂️</button>
+          <button type="button" data-avatar="👨‍🚀" class="avatar-choice p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xl flex items-center justify-center cursor-pointer">👨‍🚀</button>
+          <button type="button" data-avatar="🐯" class="avatar-choice p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xl flex items-center justify-center cursor-pointer">🐯</button>
+          <button type="button" data-avatar="⚡" class="avatar-choice p-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xl flex items-center justify-center cursor-pointer">⚡</button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="entry-login-form" class="space-y-4">
+        <div>
+          <label for="entry-name" class="block text-xs font-semibold text-slate-300 mb-1.5">
+            Your Full Name / Display Name
+          </label>
+          <input id="entry-name" type="text" required placeholder="e.g. Maya Patel" class="w-full bg-slate-900/90 border border-slate-700/90 rounded-xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors">
+        </div>
+
+        <div>
+          <label for="entry-handle" class="block text-xs font-semibold text-slate-300 mb-1.5">
+            Developer Handle
+          </label>
+          <div class="relative flex items-center">
+            <span class="absolute left-3.5 text-slate-500 text-sm">@</span>
+            <input id="entry-handle" type="text" required placeholder="maya_swift" class="w-full bg-slate-900/90 border border-slate-700/90 rounded-xl pl-8 pr-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors font-mono">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 via-rose-500 to-amber-400 hover:from-orange-600 hover:to-rose-600 text-white font-bold text-sm uppercase tracking-wider transition-all shadow-xl shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer">
+          <span>Enter Arena & Select Quiz</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </form>
+
+      <!-- Footer Note -->
+      <div class="mt-4 pt-3 border-t border-slate-800 text-center text-[11px] text-slate-500">
+        Live tournament scoring active • Real-time leaderboard synchronization
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SCREEN 2: QUIZ SELECTION DASHBOARD (Shown after login) -->
+  <!-- ========================================================================= -->
+  <section id="dashboard-screen" class="min-h-screen flex flex-col justify-between hidden">
+    <!-- Dashboard Top Bar -->
+    <header class="border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 to-orange-400 p-0.5 flex items-center justify-center">
+            <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+              <i class="fa-brands fa-swift text-orange-400 text-base"></i>
+            </div>
+          </div>
+          <div>
+            <span class="font-heading font-extrabold text-base tracking-tight text-white">Swift Championship</span>
+            <div class="text-[11px] text-slate-400">Tournament Lobby</div>
+          </div>
+        </div>
+
+        <!-- User Profile & Logout -->
+        <div class="flex items-center gap-3">
+          <!-- User Chip -->
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
+            <span id="dash-user-avatar" class="text-base">🦅</span>
+            <div class="text-left">
+              <div id="dash-user-name" class="text-xs font-bold text-slate-200">Participant</div>
+              <div id="dash-user-handle" class="text-[10px] text-slate-400 font-mono">@handle</div>
+            </div>
+          </div>
+
+          <!-- Points & Rank -->
+          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-orange-500/15 border border-orange-500/30 text-xs font-bold text-orange-400">
+            <i class="fa-solid fa-bolt text-amber-400"></i>
+            <span id="dash-user-points" class="font-mono text-amber-300">0</span>
+            <span class="text-[10px] opacity-80">PTS</span>
+          </div>
+
+          <!-- Leaderboard Modal Trigger -->
+          <button id="dash-open-leaderboard-btn" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-2 cursor-pointer">
+            <span class="live-dot"></span>
+            <i class="fa-solid fa-trophy text-amber-400 text-xs"></i>
+            <span class="hidden sm:inline">Leaderboard</span>
+          </button>
+
+          <!-- Logout Button -->
+          <button id="dash-logout-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-rose-950/60 border border-slate-800 hover:border-rose-500/40 text-slate-400 hover:text-rose-400 text-xs transition-colors cursor-pointer" title="Log out / Switch User">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Main Content -->
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+      <!-- Welcome Hero -->
+      <div class="glass-panel-elevated rounded-3xl p-6 sm:p-8 mb-8 border border-slate-800 relative overflow-hidden">
+        <div class="absolute -right-16 -top-16 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Tournament Rounds Active</span>
+          </div>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-slate-100 tracking-tight mb-2">
+            Select Your Quiz Track
+          </h2>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Choose a challenge track below to test your Swift mastery. Each question awards live tournament points and speed bonuses that update your standing in real-time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Track Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        
+        <!-- Track 1: Day 1 (Archived / Practice) -->
+        <div class="quiz-track-card glass-panel rounded-2xl p-6 border border-slate-800/90 flex flex-col justify-between opacity-75 hover:opacity-100">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                Round 1 Archive
+              </span>
+              <span class="text-xs text-slate-500 font-mono">20 Questions</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg mb-3">
+              📦
+            </div>
+            <h3 class="font-heading font-bold text-lg text-slate-200 mb-1">
+              Day 1: Swift Basics
+            </h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+              Variables, constants, primitive data types, basic operators, and string interpolation.
+            </p>
+          </div>
+          <button type="button" disabled class="w-full py-2.5 rounded-xl bg-slate-800/60 text-slate-500 text-xs font-bold cursor-not-allowed">
+            Completed in Round 1
+          </button>
+        </div>
+
+        <!-- Track 2: Day 2 (ACTIVE QUIZ - PPTX) -->
+        <div class="quiz-track-card glass-panel-elevated rounded-2xl p-6 border-2 border-orange-500/50 flex flex-col justify-between relative shadow-xl shadow-orange-500/10">
+          <!-- Active Ribbon -->
+          <div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+            🔥 ACTIVE TOURNAMENT
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/40">
+                Round 2 Featured
+              </span>
+              <span class="text-xs text-orange-400 font-mono font-bold">20 Questions</span>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-orange-500 to-rose-500 p-0.5 mb-3 shadow-lg shadow-orange-500/20">
+              <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-xl">
+                ⚡
+              </div>
+            </div>
+            <h3 class="font-heading font-black text-xl text-white mb-1">
+              Day 2: Logic & Functions
+            </h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+              Logic & Branching, Logical Operators (<code class="text-orange-400">&&</code>, <code class="text-orange-400">||</code>), Ranges (<code class="text-orange-400">...</code>), Functions & Return Types, and Code Output prediction.
+            </p>
+            <div class="flex items-center gap-3 text-xs text-slate-400 mb-4 font-medium">
+              <span class="flex items-center gap-1 text-amber-400"><i class="fa-solid fa-bolt"></i> Up to 4,000+ PTS</span>
+              <span>•</span>
+              <span class="flex items-center gap-1 text-emerald-400"><i class="fa-solid fa-gauge-high"></i> Speed Bonus</span>
+            </div>
+          </div>
+
+          <!-- Launch Day 2 Button -->
+          <button id="launch-day2-quiz-btn" type="button" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-orange-500 via-rose-500 to-amber-400 hover:from-orange-600 hover:to-rose-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30 transition-all cursor-pointer">
+            <span>Start Day 2 Quiz Now</span>
+            <i class="fa-solid fa-play text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Track 3: Day 3 (Upcoming) -->
+        <div class="quiz-track-card glass-panel rounded-2xl p-6 border border-slate-800/90 flex flex-col justify-between opacity-60">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                Round 3
+              </span>
+              <span class="text-xs text-slate-500 font-mono">20 Questions</span>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg mb-3">
+              🔒
+            </div>
+            <h3 class="font-heading font-bold text-lg text-slate-300 mb-1">
+              Day 3: OOP & Protocols
+            </h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+              Object-Oriented Programming, Classes, Structs, Protocols, Closures, and Error Handling.
+            </p>
+          </div>
+          <button type="button" disabled class="w-full py-2.5 rounded-xl bg-slate-800/40 text-slate-500 text-xs font-bold cursor-not-allowed">
+            Opens in Round 3
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-4 bg-slate-950/70 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>Swift Programming Championship • Round 2</p>
+        <p class="font-mono text-slate-600">Built with HTML5, CSS3 & Tailwind CSS</p>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SCREEN 3: ACTIVE DAY 2 QUIZ EXPERIENCE (Shown when Day 2 is chosen) -->
+  <!-- ========================================================================= -->
+  <section id="quiz-screen" class="min-h-screen flex flex-col justify-between hidden">
+    <!-- TOP NAVIGATION & HEADER -->
+    <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-4">
+        
+        <!-- Left: Back to Dashboard & Logo -->
+        <div class="flex items-center gap-3">
+          <button id="quiz-back-to-dashboard-btn" class="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 font-medium flex items-center gap-1.5 transition-colors cursor-pointer" title="Back to Quiz Selection">
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+            <span class="hidden sm:inline">Lobby</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            <span class="font-heading font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-orange-400 via-rose-400 to-amber-300 bg-clip-text text-transparent">
+              Swift Quiz
+            </span>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/30">
+              Day 2
+            </span>
+          </div>
+        </div>
+
+        <!-- Center: Real-Time Stats (Points, Rank, Streak) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Real-Time User Points Display -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/15 border border-orange-500/30 text-xs font-bold text-orange-400 shadow-sm" title="Real-Time Tournament Points">
+            <i class="fa-solid fa-bolt text-amber-400"></i>
+            <span id="user-points-badge" class="font-mono text-sm text-amber-300">0</span>
+            <span class="text-[10px] uppercase tracking-wider opacity-80">PTS</span>
+          </div>
+
+          <!-- Real-Time User Rank Display -->
+          <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs font-bold text-slate-200" title="Your Live Standing">
+            <i class="fa-solid fa-trophy text-amber-400 text-xs"></i>
+            <span>Rank</span>
+            <span id="user-rank-badge" class="font-mono text-xs text-amber-400">#5</span>
+          </div>
+
+          <!-- Live Streak Badge -->
+          <div id="streak-badge" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-bold opacity-40 transition-opacity" title="Consecutive correct answers">
+            <span>🔥</span>
+            <span id="streak-count">0</span>
+          </div>
+
+          <!-- Timer -->
+          <div class="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-mono font-medium">
+            <i class="fa-regular fa-clock text-orange-400 text-xs"></i>
+            <span id="timer-display">00:00</span>
+          </div>
+        </div>
+
+        <!-- Top Right Controls: Leaderboard Button & Profile / Audio -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- Real-Time Leaderboard Trigger Button -->
+          <button id="open-leaderboard-btn" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-slate-900 to-slate-850 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-100 flex items-center gap-2 transition-all shadow-md cursor-pointer group">
+            <span class="live-dot"></span>
+            <i class="fa-solid fa-ranking-star text-amber-400 group-hover:scale-110 transition-transform"></i>
+            <span class="hidden sm:inline">Leaderboard</span>
+          </button>
+
+          <!-- User Profile Display -->
+          <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800">
+            <span id="user-avatar-badge" class="text-sm">🦅</span>
+            <span id="user-name-badge" class="text-xs font-bold text-slate-200 hidden lg:inline">Participant</span>
+          </div>
+
+          <!-- Audio Toggle -->
+          <button id="sound-toggle-btn" class="w-8 h-8 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 flex items-center justify-center transition-colors cursor-pointer" title="Toggle audio">
+            <i class="fa-solid fa-volume-high text-orange-400"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN QUIZ CONTENT CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        
+        <!-- LEFT COLUMN: CURRENT QUESTION CARD (8 Cols) -->
+        <section class="lg:col-span-8 flex flex-col gap-6">
+          <div class="glass-panel-elevated rounded-2xl p-5 sm:p-7 relative overflow-hidden">
+            
+            <!-- Glow Accent -->
+            <div class="absolute -top-24 -right-24 w-60 h-60 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Question Metadata Header -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-5 border-b border-slate-800/80 pb-4">
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <span id="q-number-badge" class="font-heading font-black text-sm text-white tracking-wide bg-slate-800/80 px-3 py-1 rounded-lg border border-slate-700/60">
+                  Question 1
+                </span>
+                <span id="q-difficulty-badge" class="text-xs font-semibold px-2.5 py-1 rounded-full border bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+                  Easy
+                </span>
+                <span id="q-category-badge" class="text-xs text-slate-400 font-medium flex items-center gap-1 bg-slate-900/60 px-2.5 py-1 rounded-md border border-slate-800">
+                  Operators
+                </span>
+                <span id="q-points-badge" class="text-xs text-amber-400 font-bold flex items-center gap-1 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
+                  +100 PTS
+                </span>
+              </div>
+
+              <!-- Question Counter & Bookmark -->
+              <div class="flex items-center gap-3">
+                <span id="q-total-badge" class="text-xs font-mono text-slate-400">1 / 20</span>
+                <button id="bookmark-btn" class="w-8 h-8 rounded-lg bg-slate-800/60 hover:bg-slate-700/60 border border-slate-700/60 flex items-center justify-center transition-colors cursor-pointer" title="Bookmark this question">
+                  <i class="fa-regular fa-bookmark text-slate-400"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Prompt Title -->
+            <h1 id="q-prompt" class="font-heading text-lg sm:text-2xl font-bold text-slate-100 leading-snug mb-5">
+              What is the output?
+            </h1>
+
+            <!-- macOS / Xcode Styled Code Snippet Container -->
+            <div id="code-container" class="mb-6 rounded-xl border border-slate-800/90 bg-[#0B101E] overflow-hidden shadow-inner hidden">
+              <div class="px-4 py-2.5 bg-[#080D1A] border-b border-slate-800/80 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                  <span class="ml-2 text-xs font-mono text-slate-400 font-medium flex items-center gap-1.5">
+                    <i class="fa-brands fa-swift text-orange-400 text-xs"></i>
+                    <span>main.swift</span>
+                  </span>
+                </div>
+                <button id="copy-code-btn" class="text-slate-400 hover:text-slate-200 text-xs flex items-center gap-1.5 py-0.5 px-2 rounded hover:bg-slate-800/60 transition-colors cursor-pointer" title="Copy code snippet">
+                  <i class="fa-regular fa-copy text-xs"></i>
+                  <span class="text-xs">Copy</span>
+                </button>
+              </div>
+
+              <div class="p-4 overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed">
+                <div id="code-block" class="table w-full"></div>
+              </div>
+            </div>
+
+            <!-- Interactive Terminal Console (For Code Output Questions) -->
+            <div id="code-output-terminal" class="mb-6 p-4 rounded-xl border border-slate-800 bg-slate-900/60 hidden">
+              <label for="terminal-input" class="block text-xs font-semibold text-orange-400 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-terminal text-xs"></i>
+                <span>Interactive Output Predictor (Type output or pick below):</span>
+              </label>
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 font-mono text-sm">&gt;</span>
+                <input id="terminal-input" type="text" placeholder="e.g. Negative or 2, 4, 6" class="flex-1 bg-slate-950/80 border border-slate-700/80 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-orange-500 placeholder-slate-600">
+                <button id="terminal-submit" type="button" class="px-4 py-2 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white rounded-lg text-xs font-bold transition-all shadow-md shadow-orange-500/20 cursor-pointer">
+                  Test Output
+                </button>
+              </div>
+            </div>
+
+            <!-- Options Container (A, B, C, D) -->
+            <div class="space-y-3" id="options-container"></div>
+
+            <!-- Explanation Feedback Drawer (Reveals in Practice Mode) -->
+            <div id="explanation-box" class="mt-6 p-4.5 rounded-xl border border-slate-800 bg-slate-900/90 shadow-lg hidden">
+              <div id="explanation-text"></div>
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="flex items-center justify-between mt-8 pt-5 border-t border-slate-800/80">
+              <button id="prev-btn" type="button" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-semibold text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer disabled:opacity-40">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Previous</span>
+              </button>
+
+              <div class="text-xs text-slate-500 font-medium hidden sm:flex items-center gap-2">
+                <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">A</kbd>
+                <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">B</kbd>
+                <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">C</kbd>
+                <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">D</kbd>
+                <span>to answer</span>
+                <span class="mx-1">•</span>
+                <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">←</kbd>
+                <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono text-[10px]">→</kbd>
+                <span>to navigate</span>
+              </div>
+
+              <button id="next-btn" type="button" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-orange-500/25 transition-all cursor-pointer">
+                <span>Next</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT COLUMN: QUESTION NAVIGATOR & STANDINGS (4 Cols) -->
+        <aside class="lg:col-span-4 flex flex-col gap-6">
+          
+          <!-- Live Real-Time Leaderboard Mini-Widget -->
+          <div class="glass-panel rounded-2xl p-5 border border-slate-800/80">
+            <div class="flex items-center justify-between mb-3.5">
+              <div class="flex items-center gap-2">
+                <span class="live-dot"></span>
+                <h2 class="font-heading font-bold text-sm text-slate-200">
+                  Live Standings
+                </h2>
+              </div>
+              <button id="view-full-leaderboard-link" class="text-xs text-orange-400 hover:text-orange-300 font-semibold cursor-pointer">
+                Full Board &rarr;
+              </button>
+            </div>
+
+            <div id="mini-leaderboard-rows" class="space-y-2 mb-3"></div>
+
+            <div class="pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+              <span class="flex items-center gap-1.5">
+                <i class="fa-solid fa-arrows-rotate text-emerald-400 text-[10px] animate-spin"></i>
+                <span id="live-activity-ticker">Syncing live points...</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Navigator Grid Card -->
+          <div class="glass-panel rounded-2xl p-5 border border-slate-800/80">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="font-heading font-bold text-sm text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-compass text-orange-400"></i>
+                <span>Question Navigator</span>
+              </h2>
+              <span id="current-score-text" class="text-xs font-mono font-bold text-slate-400 bg-slate-900/80 px-2.5 py-1 rounded-md border border-slate-800">
+                0 / 20
+              </span>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-2.5 mb-4 border-b border-slate-800/80 text-xs">
+              <button type="button" data-filter="all" class="px-2.5 py-1 rounded-lg font-medium border bg-orange-500/20 text-orange-400 border-orange-500/40 transition-colors whitespace-nowrap cursor-pointer">
+                All (20)
+              </button>
+              <button type="button" data-filter="easy" class="px-2.5 py-1 rounded-lg font-medium border border-transparent text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap cursor-pointer">
+                Easy
+              </button>
+              <button type="button" data-filter="medium" class="px-2.5 py-1 rounded-lg font-medium border border-transparent text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap cursor-pointer">
+                Medium
+              </button>
+              <button type="button" data-filter="output" class="px-2.5 py-1 rounded-lg font-medium border border-transparent text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap cursor-pointer">
+                Code Output
+              </button>
+              <button type="button" data-filter="bookmarked" class="px-2.5 py-1 rounded-lg font-medium border border-transparent text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap cursor-pointer">
+                <i class="fa-solid fa-bookmark text-amber-400 mr-1 text-[10px]"></i>Saved
+              </button>
+            </div>
+
+            <!-- 20 Question Grid -->
+            <div id="nav-grid" class="grid grid-cols-5 gap-2.5 mb-5"></div>
+
+            <!-- Grid Legend -->
+            <div class="pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2 text-[11px] text-slate-400">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span>Correct</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                <span>Incorrect</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full ring-2 ring-orange-500 bg-slate-900"></span>
+                <span>Current</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <span>Bookmarked</span>
+              </div>
+            </div>
+
+            <!-- Finish Quiz Early / Submit Button -->
+            <div class="mt-5">
+              <button id="finish-quiz-btn" type="button" class="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 text-slate-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
+                <i class="fa-solid fa-chart-pie text-orange-400"></i>
+                <span>Complete & View Score</span>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-4 bg-slate-950/70 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>Swift Programming • Day 2: Logic, Functions & Algorithms Quiz</p>
+        <p class="font-mono text-slate-600">Built with HTML5, CSS3 & Tailwind CSS</p>
+      </div>
+    </footer>
+  </section>
+
+  <!-- REAL-TIME LEADERBOARD MODAL -->
+  <div id="leaderboard-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden">
+    <div class="glass-panel-elevated rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] flex flex-col relative animate-pop-in border border-slate-700/90 shadow-2xl">
+      
+      <!-- Close Button -->
+      <button id="close-leaderboard-btn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors cursor-pointer w-8 h-8 rounded-full bg-slate-800/80 flex items-center justify-center">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="live-dot"></span>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-100">
+              Tournament Leaderboard
+            </h2>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Real-time rankings for Swift Day 2: Logic, Functions & Algorithms
+          </p>
+        </div>
+        <div class="text-right">
+          <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+            LIVE SYNC
+          </span>
+        </div>
+      </div>
+
+      <!-- Top 3 Podium Cards -->
+      <div id="leaderboard-podium" class="grid grid-cols-3 gap-3 mb-6 items-end"></div>
+
+      <!-- Scrollable Leaderboard Table -->
+      <div class="flex-1 overflow-y-auto pr-1 space-y-2 mb-4" id="leaderboard-table-rows"></div>
+
+      <!-- Footer Info -->
+      <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+        <div class="flex items-center gap-1.5">
+          <i class="fa-solid fa-bolt text-amber-400"></i>
+          <span>Points: <strong>+100</strong> Easy, <strong>+150</strong> Med, <strong>+200</strong> Challenge + Speed/Streak</span>
+        </div>
+        <button id="reset-leaderboard-btn" class="text-[11px] text-slate-500 hover:text-slate-300 underline cursor-pointer">
+          Reset Tournament
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESULTS & REVIEW MODAL -->
+  <div id="results-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+    <div class="glass-panel-elevated rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] flex flex-col relative animate-pop-in border border-slate-700/80">
+      
+      <!-- Close Button -->
+      <button id="close-results-btn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors cursor-pointer w-8 h-8 rounded-full bg-slate-800/80 flex items-center justify-center">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
+      <!-- Score Hero -->
+      <div class="text-center mb-6">
+        <div class="inline-block relative mb-3">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-orange-500 via-rose-500 to-amber-400 p-1 flex items-center justify-center shadow-xl shadow-orange-500/30">
+            <div class="w-full h-full bg-slate-950 rounded-full flex flex-col items-center justify-center">
+              <span id="modal-score-pct" class="font-heading font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">
+                0%
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="modal-title-grade" class="font-heading font-extrabold text-2xl text-slate-100 mb-1">
+          Quiz Completed!
+        </h2>
+        <div class="flex items-center justify-center gap-2 mb-2">
+          <span id="modal-badge-grade" class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/20 text-orange-300 border border-orange-500/30">
+            Intermediate
+          </span>
+        </div>
+        <p id="modal-score-ratio" class="text-sm text-slate-400 font-medium">
+          0 of 20 Questions Correct
+        </p>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-4 gap-2.5 mb-6">
+        <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+          <div class="text-[11px] text-slate-400 mb-1">Points Earned</div>
+          <div id="modal-points-earned" class="font-mono font-bold text-sm text-amber-400">0 PTS</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+          <div class="text-[11px] text-slate-400 mb-1">Final Rank</div>
+          <div id="modal-final-rank" class="font-bold text-sm text-slate-100">#5</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+          <div class="text-[11px] text-slate-400 mb-1">Max Streak</div>
+          <div id="modal-streak-max" class="font-bold text-sm text-orange-400">0 in a row</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+          <div class="text-[11px] text-slate-400 mb-1">Accuracy</div>
+          <div id="modal-accuracy" class="font-bold text-sm text-emerald-400">0%</div>
+        </div>
+      </div>
+
+      <!-- Scrollable Detailed Review List -->
+      <div class="flex-1 overflow-y-auto pr-1 mb-6 space-y-3" id="modal-review-list"></div>
+
+      <!-- Modal Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center gap-3 pt-3 border-t border-slate-800">
+        <button id="view-leaderboard-from-results" type="button" class="w-full sm:flex-1 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-orange-500/20 cursor-pointer">
+          <i class="fa-solid fa-trophy mr-1.5"></i> Check Leaderboard
+        </button>
+        <button id="retry-missed-btn" type="button" class="w-full sm:flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border border-slate-700 hidden">
+          Retry Missed
+        </button>
+        <button id="restart-btn" type="button" class="w-full sm:flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer border border-slate-700">
+          Restart Day 2 Quiz
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
