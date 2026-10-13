@@ -1,0 +1,276 @@
+/* Swift Quiz App - Custom Styles & Animations */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --swift-orange: #FF5436;
+  --swift-gradient: linear-gradient(135deg, #FF6B4A 0%, #FF334B 50%, #FF8A00 100%);
+  --swift-glass: rgba(15, 23, 42, 0.75);
+  --swift-border: rgba(255, 255, 255, 0.08);
+  --swift-glow: rgba(255, 84, 54, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #080c16;
+  color: #f1f5f9;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+code, pre, .font-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-elevated {
+  background: rgba(22, 32, 56, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 30px -10px rgba(255, 84, 54, 0.12);
+}
+
+.glass-dropdown {
+  background: rgba(12, 19, 36, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Ambient Background Mesh */
+.bg-mesh {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 84, 54, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(244, 63, 94, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.12) 0px, transparent 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 84, 54, 0.6);
+}
+
+/* Swift Syntax Highlighting Colors */
+.swift-kw {
+  color: #F43F5E;
+  font-weight: 600;
+}
+.swift-type {
+  color: #38BDF8;
+  font-weight: 600;
+}
+.swift-str {
+  color: #34D399;
+}
+.swift-num {
+  color: #FBBF24;
+}
+.swift-fn {
+  color: #818CF8;
+  font-weight: 500;
+}
+.swift-op {
+  color: #FB923C;
+}
+.swift-arg {
+  color: #C084FC;
+}
+.swift-comment {
+  color: #64748B;
+  font-style: italic;
+}
+
+/* Floating Points Gain Notification */
+@keyframes floatUpFadeOut {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.85);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1.08);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-16px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) scale(0.9);
+  }
+}
+
+.animate-float-points {
+  animation: floatUpFadeOut 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Live Pulse Dot */
+.live-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+}
+
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid #10B981;
+  animation: pulseLive 1.8s infinite;
+}
+
+@keyframes pulseLive {
+  0% { transform: scale(0.9); opacity: 0.9; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 84, 54, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 84, 54, 0.45);
+  }
+}
+
+.glow-orange {
+  animation: pulseGlow 3s infinite;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop-in {
+  animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Option Card Styling & States */
+.option-card {
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.option-card:hover:not(.disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 107, 74, 0.45);
+  background: rgba(30, 41, 69, 0.7);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.4);
+}
+
+.option-card.selected {
+  border-color: #FF5436;
+  background: rgba(255, 84, 54, 0.12);
+  box-shadow: 0 0 0 1px #FF5436, 0 10px 25px -5px rgba(255, 84, 54, 0.25);
+}
+
+.option-card.correct {
+  border-color: #10B981 !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+  box-shadow: 0 0 0 1px #10B981, 0 10px 25px -5px rgba(16, 185, 129, 0.3) !important;
+}
+
+.option-card.incorrect {
+  border-color: #EF4444 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+  box-shadow: 0 0 0 1px #EF4444, 0 10px 25px -5px rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Nav Pill Active Indicator */
+.nav-pill {
+  transition: all 0.2s ease;
+}
+
+.nav-pill.active {
+  ring-width: 2px;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 84, 54, 0.6);
+}
+
+/* Avatar Option Selection */
+.avatar-choice {
+  transition: all 0.2s ease;
+}
+.avatar-choice.selected {
+  outline: 2px solid #FF5436;
+  outline-offset: 2px;
+  transform: scale(1.12);
+  background-color: rgba(255, 84, 54, 0.2);
+  box-shadow: 0 0 16px rgba(255, 84, 54, 0.4);
+}
+
+/* Quiz Track Card Hover */
+.quiz-track-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.quiz-track-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 84, 54, 0.4);
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.6), 0 0 25px -5px rgba(255, 84, 54, 0.2);
+}
+
+/* Leaderboard Highlight Row */
+.leaderboard-current-user {
+  background: linear-gradient(90deg, rgba(255, 84, 54, 0.18), rgba(244, 63, 94, 0.12)) !important;
+  border-color: rgba(255, 84, 54, 0.5) !important;
+  box-shadow: 0 0 20px -5px rgba(255, 84, 54, 0.35);
+}
+
+/* Confetti Canvas */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
